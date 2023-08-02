@@ -1,0 +1,4 @@
+nano ~/.zshrc
+ 
+export PS1='%F{blue}%n@%m %1~%f$%F{white} '
+

@@ -1,0 +1,61 @@
+/*
+
+
+селекторы - это способ обращения к элементам внутри html 
+
+селекторы бывают по: 
+id -> #name id
+class -> .name class
+teg -> name teg
+* -> universal
+
+
+*/
+
+
+
+
+*{
+    color: black;
+}
+
+
+
+
+
+li {
+    list-style-type: none;
+}
+
+.block {
+    width: 600px;
+    height: 100px;
+    margin: 0 auto;
+    background-color: yellow;
+    /* border-radius: 5%; */
+
+}
+#block-nurs {
+    background-color: blueviolet;
+}
+
+
+#block-2 {
+    background-color: cornflowerblue;
+}
+
+
+.block_form {
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+}

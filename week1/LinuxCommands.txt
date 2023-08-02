@@ -1,0 +1,41 @@
+pwd - (print working directory)
+ls - (list)
+ls -la 
+ls -a
+cd - (change directory)
+cd ../
+mkdir - (make directory)
+rmdir - (remove directory)
+rm (remove)
+rm -rf - (remove recursiv forse)
+touch - (make file)
+mv
+clear 
+control+l 
+nano
+cat (concatenat)
+find
+tree
+sudo
+history
+cp (copy)
+echo <text> file_name (write text in this file)
+cat file_name > file_name (copy conten)
+du (disk usage)t
+
+
+
+
+
+
+
+
+
+
+
+
+
+nano ~/.zshrc
+ 
+export PS1='%F{blue}%n@%m %1~%f$%F{white} '
+
