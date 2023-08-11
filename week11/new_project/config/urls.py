@@ -1,5 +1,5 @@
 """
-URL configuration for test1 project.
+URL configuration for config project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from larisa.views import category_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include('larisa.urls'))
+    path('posts/', include('apps.main.urls')),
+    path('review/', include('apps.review.urls')),
 ]

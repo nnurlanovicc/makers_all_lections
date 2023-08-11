@@ -19,3 +19,27 @@ class TestModel(models.Model):
     def __str__(self):
         return self.slug
 
+
+
+class Category(models.Model):
+    title = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.title
+
+class Tag(models.Model):
+    title = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.title
+
+class Post(models.Model):
+    title = models.CharField(max_length=30)
+    text = models.TextField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='posts')
+    tags = models.ManyToManyField(Tag, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
