@@ -15,18 +15,11 @@ User = get_user_model()
 class RegistrationView(APIView):
 
     def post(self,request):
-        serializer = RegistrationSerializer(
-            data=request.data
-        )
+        serializer = RegistrationSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response('Аккаунт успешно создан', status=201)
     
-
-    # def get(self,request):
-    #     queryset = User.objects.all()
-    #     serializer = RegistrationSerializer(queryset, many=True)
-    #     return Response(serializer.data, status=200)
     
 
 class ActivationView(APIView):
@@ -40,13 +33,16 @@ class ActivationView(APIView):
 
 class loginView(ObtainAuthToken):
     serializer_class = LoginSerializer
+    
+
+
 
 
 class LogoutView(APIView):
 
     permission_classes = [IsActivePermission]
 
-    def post(selfself, request):
+    def post(self, request):
         user = request.user
         Token.objects.filter(user=user).delete()
         return Response('иди на три веселые буквы')
@@ -88,3 +84,43 @@ class ForgotPasswordCompleteView(APIView):
             return Response(
                 'Пароль успешно изменен'
             )
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from account.permissions import IsAuthorPermission
+from rest_framework.generics import GenericAPIView
+from .serializers import CommentSerializer
+from .models import Comment
+
+
+
+class CommentView(GenericAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    def get_permissions(self):
+        if self.action == 'create':
+            self.permission_classes = [IsAuthenticated]
+
+        elif self.action in ['update', 'partial_update', 'destroy']:
+            self.permission_classes = [IsAuthorPermission]
+        
+        elif self.action in ['list', 'retrieve']:
+            self.permission_classes = [AllowAny]
+        return self.permission_classes
+'''
