@@ -1,6 +1,8 @@
 from django.db import models
 from product.models import Product
 from django.contrib.auth import get_user_model
+from typing import List, Tuple
+
 
 User = get_user_model()
 
@@ -44,6 +46,16 @@ class DisLike(models.Model):
 class Favorite(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='favorites')
+
+    class Meta:
+        ordering: ('-pk',)
+        constraints = [
+            models.UniqueConstraint(fields=['author', 'product'], name='unique_author_product'),
+        ]
+        indexes = [
+            models.Index(fields=['author','product'], name='idx_author_product'),
+        ]
+
 
     def __str__(self) -> str:
         return f'{self.author} -> {self.product}'

@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 AUTH_USER_MODEL = 'account.User'
@@ -48,16 +48,19 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework_simplejwt',
     'django_filters',
+    'corsheaders',
     #apps
     'product',
     'account',
     'review',
+    'order',
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -160,13 +163,16 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 2
 }
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=40),
-    'REFRESH_TOKEN_LIFE TIME': timedelta(days=1)
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=6000),
+    'REFRESH_TOKEN_LIFE TIME': timedelta(days=5)
 }
 
 
@@ -181,3 +187,66 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+
+
+
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "main_format": {
+            "format": "{levelname} -> {asctime} -> {module} -> {filename} -> {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} -> {message}",
+            "style": "{",
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+
+        "file": {
+            "class": "logging.FileHandler",
+            "formatter": "main_format",
+            "filename": "debug.log",                    
+        },
+    },
+    "loggers":{
+        "django": {
+            "handlers": ["console"],
+            "propagate": True
+        },
+        "django.request":{
+            "handlers": ["file"],
+            "level": "ERROR",
+            "propagate": True
+        },
+    },
+
+}
+
+
+
+
+
+CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:8000', 'http://127.0.0.1:3000', 'https://domain.com']
+
+CORS_ALLOWED_METHODS = ['POST', 'GET', 'PUT', 'PATCH', 'DELETE']
+ 
+
+
