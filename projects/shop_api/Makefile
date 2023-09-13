@@ -6,18 +6,22 @@
 + swagger
 
 + favorits, dislike       
-pagination filter serch =================================================
++ pagination filter serch
+
++ celery   -> brew install redis (добавить в req.txt redis, celery)
++ order
++ карусель
+
+
++ cache
++ logging
++ cors
++ media
++ admin
+
+
+- tests
+- fake chat
+
 
 deploy
-celery
-
-order
-tests
-cache
-logging
-cors
-media
-admin
-карусель
-fake chat
-
